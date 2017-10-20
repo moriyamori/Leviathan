@@ -12,6 +12,7 @@ import org.w3c.dom.Text;
 
 import static android.R.attr.button;
 import static android.R.attr.value;
+import static com.example.sample.pokemon.R.id.plusButton;
 
 public class MainActivity extends AppCompatActivity {
     private int addQuantity;
@@ -24,20 +25,27 @@ public class MainActivity extends AppCompatActivity {
     //(+)ボタンの処理
     public void addPlusButton(View view){
     addQuantity++;
-        TextView counView = (TextView) findViewById(R.id.textView);
-        counView.setText(String.valueOf(addQuantity));
+        TextView countView = (TextView) findViewById(R.id.textView);
+        countView.setText(String.valueOf(addQuantity));
     }
     //(-)ボタンの処理
     public void addMinusButton(View view){
         addQuantity--;
-        TextView countView = (TextView) findViewById(R.id.textView);
-        countView.setText(String.valueOf(addQuantity));
+        TextView countView = (TextView) findViewById(R.id.textView);//IDがtextviewのviewをcountView変数に格納
+        countView.setText(String.valueOf(addQuantity));//contviewに数値(addQuantity)を格納
 
     }
     //テスト用ボタン
     public void addTestButton(View view){
         Button plusButton = (Button) findViewById(R.id.plusButton);
         plusButton.setEnabled(false);
+    }
+    private int thousand = 1000;
+
+    //数量1000追加ボタン(カンマ実装確認用)
+    public void addOneThousandButton(View view){
+        TextView muu = (TextView) findViewById(R.id.textView);
+        muu.setText(String.valueOf(thousand));
     }
 }
 
