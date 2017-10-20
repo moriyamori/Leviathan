@@ -13,7 +13,7 @@ import org.w3c.dom.Text;
 import static android.R.attr.button;
 import static android.R.attr.value;
 import static com.example.sample.pokemon.R.id.plusButton;
-
+//test
 public class MainActivity extends AppCompatActivity {
     private int addQuantity;
 
