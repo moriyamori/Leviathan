@@ -6,46 +6,48 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.sample.pokemon.R;
 
-import org.w3c.dom.Text;
-
-import static android.R.attr.button;
-import static android.R.attr.value;
-import static com.example.sample.pokemon.R.id.plusButton;
-//test
 public class MainActivity extends AppCompatActivity {
-    private int addQuantity;
+    private int quantity;
+    private TextView quantityTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
        setContentView(R.layout.activity_main);
-    }
-    //(+)ボタンの処理
-    public void addPlusButton(View view){
-    addQuantity++;
-        TextView countView = (TextView) findViewById(R.id.textView);
-        countView.setText(String.valueOf(addQuantity));
-    }
-    //(-)ボタンの処理
-    public void addMinusButton(View view){
-        addQuantity--;
-        TextView countView = (TextView) findViewById(R.id.textView);//IDがtextviewのviewをcountView変数に格納
-        countView.setText(String.valueOf(addQuantity));//contviewに数値(addQuantity)を格納
 
+        quantityTextView = (TextView) findViewById(R.id.quantityTextView);
     }
-    //テスト用ボタン
-    public void addTestButton(View view){
+
+    //(+)ボタンの処理
+    public void onClickByPlusButton(View view){
+        quantity = quantity + 100;
+        String addCommaToQuantity = String.format("%,d",quantity);
+        quantityTextView.setText(String.valueOf(addCommaToQuantity));
+    }
+
+    //数量が０の場合(-)ボタンを非活性
+
+    //(-)ボタンの処理
+    public void onClickByMinusButton(View view){
+        quantity--;
+        String addCommaToQuantity = String.format("%,d",quantity);
+        quantityTextView.setText(String.valueOf(addCommaToQuantity));//quantiryTextViewに数値(quantity)を格納
+    }
+
+    //テスト用ボタン(pulsButton非活性)
+    public void onClickTestButton(View view){
         Button plusButton = (Button) findViewById(R.id.plusButton);
         plusButton.setEnabled(false);
     }
-    private int thousand = 1000;
+
+        private int thousand = 1000;
 
     //数量1000追加ボタン(カンマ実装確認用)
-    public void addOneThousandButton(View view){
-        TextView muu = (TextView) findViewById(R.id.textView);
-        muu.setText(String.valueOf(thousand));
+    public void onClickByThousandButton(View view){
+        quantity = quantity + 1000;
+        String addCommaToQuantity = String.format("%,d",thousand);//数値をカンマありきの文字列に変換
+        quantityTextView.setText(String.valueOf(addCommaToQuantity));
     }
 }
 
