@@ -8,14 +8,25 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    //定数を定義
+    public static final int QUANTITY_MAX = 9999;
+    public static final int QUANTITY_MIN = 0;
+
     private int quantity;
     private TextView quantityTextView;
+    private Button plusButton;
+    private Button minusButton;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        plusButton = (Button) findViewById(R.id.plusButton);
+        minusButton = (Button) findViewById(R.id.minusButton);
         quantityTextView = (TextView) findViewById(R.id.quantityTextView);
 
         setQuantityComma();
@@ -24,13 +35,12 @@ public class MainActivity extends AppCompatActivity {
 
     //数量で判定処理
     public void judgeByQuantity() {
-        Button minusButton = (Button) findViewById(R.id.minusButton);
-        Button plusButton = (Button) findViewById(R.id.plusButton);
+        //If文に置き換え
         switch (quantity) {
-            case 0:
+            case QUANTITY_MIN:
                 minusButton.setEnabled(false);
                 break;
-            case 9999:
+            case QUANTITY_MAX:
                 plusButton.setEnabled(false);
                 break;
             default:
