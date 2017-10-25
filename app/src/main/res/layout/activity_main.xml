@@ -90,11 +90,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.259" />
 
+    <!--テスト用ボタンレイアウト-->
     <Button
         android:id="@+id/oneThousandButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1,000"
+        android:text="9,999"
         android:onClick="onClickByThousandButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.397"
