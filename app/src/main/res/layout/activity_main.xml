@@ -96,7 +96,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="9,999"
-        android:onClick="onClickByThousandButton"
+        android:onClick="onClickByTestButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.397"
         app:layout_constraintLeft_toLeftOf="parent"

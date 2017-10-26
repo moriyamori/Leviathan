@@ -5,20 +5,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-
     //定数を定義
-    public static final int QUANTITY_MAX = 9999;
-    public static final int QUANTITY_MIN = 0;
+    private static final int QUANTITY_MAX = 9999;
+    private static final int QUANTITY_MIN = 0;
 
     private int quantity;
     private TextView quantityTextView;
     private Button plusButton;
     private Button minusButton;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,51 +27,58 @@ public class MainActivity extends AppCompatActivity {
         minusButton = (Button) findViewById(R.id.minusButton);
         quantityTextView = (TextView) findViewById(R.id.quantityTextView);
 
-        setQuantityComma();
-        judgeByQuantity();
+        disableBotton();
+        quantityConmmaAdded();
     }
 
-    //数量で判定処理
-    public void judgeByQuantity() {
-        //If文に置き換え
-        switch (quantity) {
-            case QUANTITY_MIN:
-                minusButton.setEnabled(false);
-                break;
-            case QUANTITY_MAX:
-                plusButton.setEnabled(false);
-                break;
-            default:
-                minusButton.setEnabled(true);
-                plusButton.setEnabled(true);
+    private void setEnableTrue() {
+        plusButton.setEnabled(true);
+        minusButton.setEnabled(true);
+    }
+
+    //数量値で非活性処理
+    private void disableBotton() {
+        if (quantity <= QUANTITY_MIN) {
+            quantity = QUANTITY_MIN;
+            minusButton.setEnabled(false);
+            plusButton.setEnabled(true);
+            Toast.makeText(this, "初期値です", Toast.LENGTH_LONG).show();
+        } else if (quantity >= QUANTITY_MAX) {
+            quantity = QUANTITY_MAX;
+            minusButton.setEnabled(true);
+            plusButton.setEnabled(false);
+            Toast.makeText(this, "これ以上数量を加算できません", Toast.LENGTH_LONG).show();
+        } else {
+            setEnableTrue();
         }
     }
 
-    public void setQuantityComma() {
-        String addCommaToQuantity = String.format("%,d", quantity);
-        quantityTextView.setText(String.valueOf(addCommaToQuantity));
+    private void quantityConmmaAdded() {
+        String quantityText = String.format("%,d", quantity);
+        quantityTextView.setText(String.valueOf(quantityText));
     }
 
     //(+)ボタンの処理
     public void onClickByPlusButton(View view) {
-        quantity = quantity + 100;
-        setQuantityComma();
-        judgeByQuantity();
+        quantity++;
+        disableBotton();
+        quantityConmmaAdded();
     }
 
     //(-)ボタン押下時の処理
     public void onClickByMinusButton(View view) {
         quantity--;
-        setQuantityComma();
-        judgeByQuantity();
+        quantityConmmaAdded();
+        disableBotton();
     }
 
-    private int quantityForTesting = 9999;
+    //Test用
+    private int quantityForTesting = QUANTITY_MAX;
 
     //数量(?)追加ボタン(カンマ実装確認用)
-    public void onClickByThousandButton(View view) {
+    public void onClickByTestButton(View view) {
         quantity = quantityForTesting;
-        setQuantityComma();
-        judgeByQuantity();
+        quantityConmmaAdded();
+        disableBotton();
     }
 }
