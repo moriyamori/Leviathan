@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+//クラスを設定
 public class MainActivity extends AppCompatActivity {
 
     //定数を定義
@@ -18,6 +19,11 @@ public class MainActivity extends AppCompatActivity {
     private Button plusButton;
     private Button minusButton;
 
+    //起動後の処理
+    //Viewを初期化
+    //ボタンを押下する
+    //値を更新する
+    //更新した値をText化して表示する
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
