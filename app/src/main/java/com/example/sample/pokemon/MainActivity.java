@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//クラスを設定
 public class MainActivity extends AppCompatActivity {
 
     //定数を定義
@@ -19,31 +18,38 @@ public class MainActivity extends AppCompatActivity {
     private Button plusButton;
     private Button minusButton;
 
-    //起動後の処理
-    //Viewを初期化
-    //ボタンを押下する
     //値を更新する
     //更新した値をText化して表示する
+    //起動後の処理
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
+        unionUi();
+        invalidationProcessingOfButtonByQuantity();
+        convertToString();
+    }
+    //Viewを初期化
+    private void unionUi() {
+        setContentView(R.layout.activity_main);
         plusButton = (Button) findViewById(R.id.plusButton);
         minusButton = (Button) findViewById(R.id.minusButton);
         quantityTextView = (TextView) findViewById(R.id.quantityTextView);
-
-        disableBotton();
-        quantityConmmaAdded();
     }
 
-    private void setEnableTrue() {
-        plusButton.setEnabled(true);
-        minusButton.setEnabled(true);
+    public void onClickByPlusButton(View view) {
+        quantity++;
+        invalidationProcessingOfButtonByQuantity();
+        convertToString();
     }
 
+    public void onClickByMinusButton(View view) {
+        quantity--;
+        convertToString();
+        invalidationProcessingOfButtonByQuantity();
+    }
     //数量値で非活性処理
-    private void disableBotton() {
+    private void invalidationProcessingOfButtonByQuantity() {
         if (quantity <= QUANTITY_MIN) {
             quantity = QUANTITY_MIN;
             minusButton.setEnabled(false);
@@ -55,27 +61,14 @@ public class MainActivity extends AppCompatActivity {
             plusButton.setEnabled(false);
             Toast.makeText(this, "これ以上数量を加算できません", Toast.LENGTH_LONG).show();
         } else {
-            setEnableTrue();
+            plusButton.setEnabled(true);
+            minusButton.setEnabled(true);
         }
     }
 
-    private void quantityConmmaAdded() {
+    private void convertToString() {
         String quantityText = String.format("%,d", quantity);
         quantityTextView.setText(String.valueOf(quantityText));
-    }
-
-    //(+)ボタンの処理
-    public void onClickByPlusButton(View view) {
-        quantity++;
-        disableBotton();
-        quantityConmmaAdded();
-    }
-
-    //(-)ボタン押下時の処理
-    public void onClickByMinusButton(View view) {
-        quantity--;
-        quantityConmmaAdded();
-        disableBotton();
     }
 
     //Test用
@@ -84,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     //数量(?)追加ボタン(カンマ実装確認用)
     public void onClickByTestButton(View view) {
         quantity = quantityForTesting;
-        quantityConmmaAdded();
-        disableBotton();
+        convertToString();
+        invalidationProcessingOfButtonByQuantity();
     }
 }
