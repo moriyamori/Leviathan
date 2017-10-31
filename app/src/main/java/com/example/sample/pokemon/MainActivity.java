@@ -7,40 +7,71 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
     //定数を定義
     private static final int QUANTITY_MAX = 9999;
     private static final int QUANTITY_MIN = 0;
+    private static final int FIEST_WAIT_TIME = 0;
+    private static final int NEXT_WAIT_TIME = 1000;
 
     private int quantity;
     private TextView quantityTextView;
     private Button plusButton;
     private Button minusButton;
-
-    //値を更新する
-    //更新した値をText化して表示する
+    private TimerTask timerTask = null;
+    private final Timer timer = new Timer();
+    private final SimpleDateFormat formatter = new SimpleDateFormat("kk:mm:ss");
+    private TextView timerTextView = null;
 
     //起動後の処理
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        unionUi();
+        unitUi();
         invalidationProcessingOfButtonByQuantity();
         convertToString();
     }
 
     //Viewを初期化
-    private void unionUi() {
+    private void unitUi() {
         setContentView(R.layout.activity_main);
-        plusButton = (Button) findViewById(R.id.plusButton);
-        minusButton = (Button) findViewById(R.id.minusButton);
-        quantityTextView = (TextView) findViewById(R.id.quantityTextView);
+        plusButton = (Button) findViewById(R.id.plusbutton);
+        minusButton = (Button) findViewById(R.id.minusbutton);
+        quantityTextView = (TextView) findViewById(R.id.quantitytextview);
+        timerTextView = (TextView) findViewById(R.id.textview_time);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // 現在時刻の表示
+                        timerTextView.setText(formatter.format(new Date()));
+                    }
+                });
+            }
+        };
+        timer.scheduleAtFixedRate(timerTask, FIEST_WAIT_TIME, NEXT_WAIT_TIME);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // バックグラウンドでの時刻表示の廃止
+        timerTask.cancel();
     }
 
     public void onClickByPlusButton(View view) {
@@ -54,31 +85,6 @@ public class MainActivity extends AppCompatActivity {
         invalidationProcessingOfButtonByQuantity();
         convertToString();
     }
-    //現在時刻表示
-    // ミリ秒
-
-private void nuu
-System.currentTimeMillis();
-
-    // Date型にする場合
-    Date now = new Date(System.currentTimeMillis);
-
-
-
-    // 日時のフォーマットオブジェクト作成」
-    public static String getNowDate(){
-        // 現在日時の取得
-        Date now = new Date(System.currentTimeMillis());
-        DateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日 HH時mm分");
-
-        // フォーマット
-        String nowText = formatter.format(now);
-
-        // 表示
-        TextView textView = (TextView)findViewById(R.id.textView);
-        textView.setText(nowText);
-    }
-
 
     //限界値でトーストも表示
     private void invalidationProcessingOfButtonByQuantity() {
